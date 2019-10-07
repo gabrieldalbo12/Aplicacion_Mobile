@@ -1,6 +1,6 @@
-# galeria_imagenes
+# Reproductor de Musica
 
-Una galeria de imagenes
+Un Reproductor de musica
 
 ## Getting Started
 
