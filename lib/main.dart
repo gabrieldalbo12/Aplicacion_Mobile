@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 void main() => runApp(MaterialApp(
   theme: ThemeData.dark(),
@@ -16,6 +18,8 @@ class _MusicPlayerState extends State<MusicPlayer> {
   final audioName = "Scatman (ski-ba-bop-ba-dop-bop) Official Video HD -Scatman John.mp3";
   final musicName = "I'm the Scatman (ski-ba-bop-ba-dop-bop)";
   final imageURL = "https://i.ytimg.com/vi/pVHKp6ffURY/hqdefault.jpg";
+  File myImage;
+
 
   AudioPlayer audioPlayer;
   AudioCache audioCache;
@@ -42,6 +46,14 @@ class _MusicPlayerState extends State<MusicPlayer> {
     });
   }
 
+  Future getImage() async {
+    var image2 = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      myImage = image2;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +73,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
                   padding: const EdgeInsets.only(top: 12, bottom: 12),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: Image.network(imageURL)),
+                      child: myImage == null? Image.network(imageURL): Image(image: FileImage(myImage))),
                 ),
                 Card(
                   child: Column(
@@ -85,6 +97,10 @@ class _MusicPlayerState extends State<MusicPlayer> {
                       )
                     ],
                   ),
+                ),
+                MaterialButton(
+                  child: Text("Agregar Foto"),
+                  onPressed: getImage,
                 ),
               ],
             ),
